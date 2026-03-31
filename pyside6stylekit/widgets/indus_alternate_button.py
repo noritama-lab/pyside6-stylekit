@@ -1,6 +1,13 @@
 # widgets/indus_alternate_button.py
 from PySide6.QtWidgets import QPushButton
-from PySide6.QtGui import QFont, QIcon
+from PySide6.QtGui import QFont, QIcon, QColor
+
+def darken(hex_color: str, factor: float = 0.7) -> str:
+    c = QColor(hex_color)
+    r = int(c.red() * factor)
+    g = int(c.green() * factor)
+    b = int(c.blue() * factor)
+    return f"#{r:02x}{g:02x}{b:02x}"
 
 class IndusAlternateButton(QPushButton):
     def __init__(self, text, theme, icon_path=None, diameter=48, text_color=None):
@@ -29,12 +36,14 @@ class IndusAlternateButton(QPushButton):
             hover = self.theme.primary_dark(0.6)
             pressed = self.theme.primary_dark(0.4)
 
+        border_color = darken(self.theme.primary, 0.8)
+
         self.setStyleSheet(f"""
             QPushButton {{
                 background-color: {bg};
                 color: {self.text_color};
                 border-radius: {self.diameter // 2}px;
-                border: none;
+                border: 2px solid {border_color};
                 font-family: '{self.theme.font_family}';
                 font-weight: bold;
             }}

@@ -29,13 +29,14 @@ class IndusMomentaryButton(QPushButton):
         bg = darken(self.theme.primary, 0.5)
         hover = darken(self.theme.primary, 0.6)
         pressed = self.theme.primary
+        border_color = darken(self.theme.primary, 0.8)
 
         self.setStyleSheet(f"""
             QPushButton {{
                 background-color: {bg};
                 color: {self.text_color};
                 border-radius: {self.diameter // 2}px;
-                border: none;
+                border: 2px solid {border_color};
                 font-family: '{self.theme.font_family}';
                 font-weight: bold;
             }}

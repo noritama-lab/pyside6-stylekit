@@ -7,8 +7,8 @@ A lightweight and extensible styled UI component kit for PySide6 applications.
 ## 特徴 / Features
 - 統一テーマ（ライト／ダーク／背景色）  
   Unified themes (light, dark, background-aware)
-- スタイル済みウィジェット（Label / LineEdit / Button など）  
-  Styled widgets such as Label, LineEdit, and Button
+- スタイル済みウィジェット（Label / LineEdit / Button / Indus Alternate Button / Indus Lamp / Indus Momentary Button など）  
+  Styled widgets such as Label, LineEdit, Button, Indus Alternate Button, Indus Lamp, and Indus Momentary Button
 - 数値バリデーション（int / float / range）  
   Robust numeric validation (int, float, range)
 - エラー表示の柔軟な制御（枠線のみ・メッセージ表示）  
@@ -31,8 +31,8 @@ pip install -e .
 ---
 
 ## 使い方 / Usage
-`examples/demo.py` に基本的な使い方があります。  
-Basic usage is available in `examples/demo.py`.
+`examples/demo.py` と `examples/demo_indus.py` に基本的な使い方があります。  
+Basic usage is available in `examples/demo.py` and `examples/demo_indus.py`.
 
 ```python
 from pyside6stylekit import Theme, StyledLabel, StyledLineEdit, StyledButton
@@ -56,16 +56,19 @@ pyside6stylekit/
 │   ├─ widgets/
 │   │  ├─ __init__.py
 │   │  ├─ button.py
+│   │  ├─ indus_alternate_button.py
+│   │  ├─ indus_lamp.py
+│   │  ├─ indus_momentary_button.py
 │   │  ├─ label.py
 │   │  └─ lineedit.py
 │   ├─ __init__.py
 │   ├─ presets.py
 │   └─ theme.py
 ├─ examples/
-│   └─ demo.py
+│   ├─ demo.py
+│   └─ demo_indus.py
 ├─ LICENSE
-├─ README.md
-└─ pyproject.toml
+└─ README.md
 ```
 
 ---
