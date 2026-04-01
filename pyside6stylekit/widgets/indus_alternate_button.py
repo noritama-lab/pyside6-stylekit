@@ -32,11 +32,11 @@ class IndusAlternateButton(QPushButton):
             hover = self.theme.hover()
             pressed = self.theme.pressed()
         else:
-            bg = self.theme.primary_dark(0.5)
-            hover = self.theme.primary_dark(0.6)
-            pressed = self.theme.primary_dark(0.4)
+            bg = self.theme.primary_dark(0.2)
+            hover = self.theme.primary_dark(0.3)
+            pressed = self.theme.primary_dark(0.2)
 
-        border_color = darken(self.theme.primary, 0.8)
+        border_color = darken(self.theme.primary, 0.5)
 
         self.setStyleSheet(f"""
             QPushButton {{

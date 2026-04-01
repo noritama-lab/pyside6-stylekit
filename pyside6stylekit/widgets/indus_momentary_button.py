@@ -26,10 +26,10 @@ class IndusMomentaryButton(QPushButton):
         self.apply_style()
 
     def apply_style(self):
-        bg = darken(self.theme.primary, 0.5)
-        hover = darken(self.theme.primary, 0.6)
+        bg = darken(self.theme.primary, 0.2)
+        hover = darken(self.theme.primary, 0.3)
         pressed = self.theme.primary
-        border_color = darken(self.theme.primary, 0.8)
+        border_color = darken(self.theme.primary, 0.5)
 
         self.setStyleSheet(f"""
             QPushButton {{

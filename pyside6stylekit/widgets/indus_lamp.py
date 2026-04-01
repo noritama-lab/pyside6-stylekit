@@ -38,7 +38,7 @@ class IndusLamp(QLabel):
             if self.state:
                 bg = self.theme.primary
             else:
-                bg = self.theme.primary_dark(0.5)
+                bg = self.theme.primary_dark(0.2)
             fg = self.text_color
 
         self.setStyleSheet(f"""

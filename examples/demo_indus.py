@@ -17,7 +17,7 @@ class SampleWindow(QWidget):
         # -------------------------
         # テーマ
         # -------------------------
-        base_theme = Theme(mode="dark", size="large", text_color="white")
+        base_theme = Theme(mode="light", size="large", text_color="white")
         button_theme = Theme(primary="green", mode="dark", size="mid", text_color="white")
 
         title = StyledLabel("IndusLamp Minimal Demo", base_theme, bold=True)
