@@ -5,13 +5,14 @@ from PySide6.QtCore import QRegularExpression
 
 class StyledLineEdit(QWidget):
     def __init__(self, placeholder, theme, mode="free",
-                 min_val=None, max_val=None):
+                 min_val=None, max_val=None, background=None):
         super().__init__()
 
         self.theme = theme
         self.mode = mode
         self.min_val = min_val
         self.max_val = max_val
+        self.background = background
 
         self.edit = QLineEdit()
         self.error_label = QLabel(" ")
@@ -38,10 +39,9 @@ class StyledLineEdit(QWidget):
                 padding: {pad_v}px {pad_h}px;
                 border: 2px solid {border_color};
                 border-radius: 6px;
-                background: {self.theme.background};
+                background: {self.background if self.background is not None else self.theme.background};
                 color: {self.theme.text_color};
                 font-family: '{self.theme.font_family}';
-                font-weight: bold;
             }}
             QLineEdit:focus {{
                 border: 2px solid {self.theme.primary};

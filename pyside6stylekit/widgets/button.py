@@ -3,10 +3,11 @@ from PySide6.QtWidgets import QPushButton
 from PySide6.QtGui import QFont, QIcon
 
 class StyledButton(QPushButton):
-    def __init__(self, text, theme, icon_path=None, text_color=None):
+    def __init__(self, text, theme, icon_path=None, text_color=None, background=None):
         super().__init__(text)
         self.theme = theme
         self.text_color = text_color or theme.text_color
+        self.background = background
 
         self.setFont(QFont(theme.font_family, theme.font_size()))
 
@@ -18,7 +19,7 @@ class StyledButton(QPushButton):
     def apply_style(self):
         pad_v, pad_h = self.theme.padding()
 
-        bg = self.theme.primary
+        bg = self.background if self.background is not None else self.theme.primary
         hover = self.theme.hover()
         pressed = self.theme.pressed()
 
@@ -30,7 +31,6 @@ class StyledButton(QPushButton):
                 border-radius: 6px;
                 font-family: '{self.theme.font_family}';
                 border: none;
-                font-weight: bold;
             }}
             QPushButton:hover {{
                 background-color: {hover};

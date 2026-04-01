@@ -6,7 +6,7 @@ from .utils.colors import normalize_color, adjust_color
 class Theme:
     def __init__(self, primary="blue", mode="light",
                  font_family="Segoe UI", size="mid",
-                 text_color=None):
+                 text_color=None, background=None):
         self.primary = normalize_color(primary)
         self.mode = mode
         self.font_family = font_family
@@ -29,11 +29,21 @@ class Theme:
                 raise ValueError("mode must be light / dark")
 
         # 背景・枠色
+        if background is not None:
+            self.background = background
+        else:
+            if mode == "light":
+                self.background = "#ffffff"
+                self.border_color = "#dcdde1"
+            else:
+                self.background = "#2f3640"
+                self.border_color = "#4b4b4b"
+            return
+
+        # backgroundが指定されてる場合、枠色もmode依存で設定
         if mode == "light":
-            self.background = "#ffffff"
             self.border_color = "#dcdde1"
         else:
-            self.background = "#2f3640"
             self.border_color = "#4b4b4b"
 
     # -------------------------

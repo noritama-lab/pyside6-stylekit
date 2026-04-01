@@ -2,7 +2,10 @@ from .theme import Theme
 from .presets import SIZE_PRESETS
 from .widgets import (
     StyledLabel, StyledButton, StyledLineEdit, 
-    IndusMomentaryButton, IndusAlternateButton, IndusLamp
+    IndusMomentaryButton, IndusAlternateButton, IndusLamp,
+    StyledCheckBox, StyledRadioButton, StyledComboBox,
+    StyledSlider, StyledProgressBar,
+    StyledTextEdit, StyledGroupBox
 )
 __all__ = [
     "Theme",
@@ -13,4 +16,11 @@ __all__ = [
     "IndusMomentaryButton",
     "IndusAlternateButton",
     "IndusLamp",
+    "StyledCheckBox",
+    "StyledRadioButton",
+    "StyledComboBox",
+    "StyledSlider",
+    "StyledProgressBar",
+    "StyledTextEdit",
+    "StyledGroupBox",
 ]

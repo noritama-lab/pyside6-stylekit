@@ -1,46 +1,63 @@
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
-from pyside6stylekit import Theme, StyledLabel, StyledLineEdit, StyledButton
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QGroupBox
+from pyside6stylekit import (Theme, StyledLabel, StyledLineEdit, StyledButton,
+                             StyledCheckBox, StyledRadioButton, StyledComboBox,
+                             StyledSlider, StyledProgressBar,
+                             StyledTextEdit, StyledGroupBox)
 import sys
 
 
 class SampleWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("StyleKit Demo")
+        self.setWindowTitle("PySide6StyleKit Demo")
 
         layout = QVBoxLayout()
 
         # -------------------------
-        # テーマ設定（Light / Dark）
-        # -------------------------
-        theme = Theme(
-            primary="blue",
-            mode="light",        # ← dark にするとダークテーマ
-            size="mid"
-        )
+        theme = Theme(primary="blue", mode="light", size="small")
 
-        # タイトル（別テーマで強調）
-        title = StyledLabel(
-            "StyleKit デモ",
-            Theme(primary="blue", mode="dark", size="large"),
-            bold=True
-        )
+        # タイトル専用テーマ（背景透明、文字色白）
+        theme_title = Theme(primary="blue", mode="light", size="large", 
+                           background="transparent", text_color="white")
+
+        # チェックボックス専用テーマ（背景透明、文字色白）
+        theme_checkbox = Theme(primary="blue", mode="light", size="small",
+                              background="transparent", text_color="white")
+
+        # GroupBox専用テーマ（背景透過）
+        theme_groupbox = Theme(primary="blue", mode="light", size="small", 
+                               background="transparent", text_color="white")
+
+        # タイトル
+        title = StyledLabel("PySide6StyleKit Demo", theme_title)
 
         # -------------------------
         # 入力欄
         # -------------------------
-        input_free = StyledLineEdit("自由入力", theme, mode="free")
-        input_numeric = StyledLineEdit("数値のみ", theme, mode="numeric")
-        input_alnum = StyledLineEdit("英数字のみ", theme, mode="alnum")
-        input_filename = StyledLineEdit("ファイル名OK", theme, mode="filename")
-        input_numeric_range = StyledLineEdit("入力制限（0〜120）", theme,
+        input_free = StyledLineEdit("Free input", theme, mode="free")
+        input_numeric = StyledLineEdit("Numeric only", theme, mode="numeric")
+        input_alnum = StyledLineEdit("Alphanumeric only", theme, mode="alnum")
+        input_filename = StyledLineEdit("Filename OK", theme, mode="filename")
+        input_numeric_range = StyledLineEdit("Range (0-120)", theme,
                                    mode="numeric_range", min_val=0, max_val=120)
 
-        # -------------------------
+        # 新しいウィジェット
+        checkbox = StyledCheckBox("CheckBox", theme_checkbox, checked=True)
+        radiobutton = StyledRadioButton("RadioButton", theme_checkbox)
+        combobox = StyledComboBox(theme, ["Option 1", "Option 2", "Option 3"])
+        slider = StyledSlider(theme, min_val=0, max_val=100, value=50)
+        progressbar = StyledProgressBar(theme, 0, 100, 75)
+        textedit = StyledTextEdit(theme, "Multi-line text editor")
+        groupbox = StyledGroupBox("Additional Controls", theme_groupbox)
+
+        # グループボックス内にウィジェットを追加
+        group_layout = QVBoxLayout()
+        group_layout.addWidget(checkbox)
+        group_layout.addWidget(radiobutton)
+        groupbox.setLayout(group_layout)
+
         # ボタン
-        # -------------------------
-        button = StyledButton("送信", theme)
-        button.clicked.connect(lambda: self.validate(input_numeric_range))
+        button = StyledButton("Validate Input", theme)
 
         # -------------------------
         # レイアウトに追加
@@ -54,8 +71,14 @@ class SampleWindow(QWidget):
         layout.addWidget(input_filename)
         layout.addWidget(input_numeric_range)
 
-        layout.addSpacing(10)
-        layout.addWidget(button)
+        layout.addWidget(combobox)
+        layout.addWidget(slider)
+        layout.addWidget(progressbar)
+        layout.addWidget(textedit)
+        layout.addWidget(groupbox)
+
+        # ボタンの接続
+        button.clicked.connect(lambda: self.validate(input_numeric_range))
 
         self.setLayout(layout)
 
@@ -64,16 +87,16 @@ class SampleWindow(QWidget):
     # -------------------------
     def validate(self, widget: StyledLineEdit):
         if widget.is_valid():
-            widget.show_error("")   # エラー非表示
+            widget.show_error("")   # Hide error
             print("OK:", widget.value())
         else:
-            widget.show_error("範囲外の値です")
+            widget.show_error("Value out of range")
             print("NG")
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     w = SampleWindow()
-    w.resize(420, 380)
+    w.resize(500, 700)
     w.show()
     sys.exit(app.exec())

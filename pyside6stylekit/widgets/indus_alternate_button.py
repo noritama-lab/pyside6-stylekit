@@ -45,7 +45,6 @@ class IndusAlternateButton(QPushButton):
                 border-radius: {self.diameter // 2}px;
                 border: 2px solid {border_color};
                 font-family: '{self.theme.font_family}';
-                font-weight: bold;
             }}
             QPushButton:hover {{
                 background-color: {hover};

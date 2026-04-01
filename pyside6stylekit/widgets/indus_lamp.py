@@ -48,6 +48,5 @@ class IndusLamp(QLabel):
                 border-radius: {self.diameter // 2}px;
                 border: none;
                 font-family: '{self.theme.font_family}';
-                font-weight: bold;
             }}
         """)

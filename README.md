@@ -7,8 +7,8 @@ A lightweight and extensible styled UI component kit for PySide6 applications.
 ## 特徴 / Features
 - 統一テーマ（ライト／ダーク／背景色）  
   Unified themes (light, dark, background-aware)
-- スタイル済みウィジェット（Label / LineEdit / Button / Indus Alternate Button / Indus Lamp / Indus Momentary Button など）  
-  Styled widgets such as Label, LineEdit, Button, Indus Alternate Button, Indus Lamp, and Indus Momentary Button
+- スタイル済みウィジェット（Label / LineEdit / Button / Indus Alternate Button / Indus Lamp / Indus Momentary Button / CheckBox / RadioButton / ComboBox / SpinBox / Slider / ProgressBar / TextEdit / GroupBox など）  
+  Styled widgets such as Label, LineEdit, Button, Indus Alternate Button, Indus Lamp, Indus Momentary Button, CheckBox, RadioButton, ComboBox, SpinBox, Slider, ProgressBar, TextEdit, and GroupBox
 - 数値バリデーション（int / float / range）  
   Robust numeric validation (int, float, range)
 - エラー表示の柔軟な制御（枠線のみ・メッセージ表示）  
