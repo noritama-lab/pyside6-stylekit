@@ -7,9 +7,17 @@ A lightweight and extensible styled UI component kit for PySide6 applications.
 ## 特徴 / Features
 - 統一テーマ（ライト／ダーク／背景色）  
   Unified themes (light, dark, background-aware)
-- スタイル済みウィジェット（Label / LineEdit / Button / Indus Alternate Button / Indus Lamp / Indus Momentary Button / CheckBox / RadioButton / ComboBox / SpinBox / Slider / ProgressBar / TextEdit / GroupBox など）  
-  Styled widgets such as Label, LineEdit, Button, Indus Alternate Button, Indus Lamp, Indus Momentary Button, CheckBox, RadioButton, ComboBox, SpinBox, Slider, ProgressBar, TextEdit, and GroupBox
+- スタイル済みウィジェット（Label / LineEdit / Button / Indus Alternate Button / Indus Lamp / Indus Momentary Button / CheckBox / RadioButton / ComboBox / Slider / ProgressBar / TextEdit / GroupBox など）  
+  Styled widgets such as Label, LineEdit, Button, Indus Alternate Button, Indus Lamp, Indus Momentary Button, CheckBox, RadioButton, ComboBox, Slider, ProgressBar, TextEdit, and GroupBox
+- GroupBox タイトルの自動中央揃え（フォントサイズ変更に追随）  
 - 数値バリデーション（int / float / range）  
+  Robust numeric validation (int, float, range)
+- エラー表示の柔軟な制御（枠線のみ・メッセージ表示）  
+  Flexible error signaling (border-only or message)
+- 拡張しやすいモジュール構造  
+  Modular and extensible architecture
+- 実用的なサンプルコード付き  
+  Includes practical example scripts
   Robust numeric validation (int, float, range)
 - エラー表示の柔軟な制御（枠線のみ・メッセージ表示）  
   Flexible error signaling (border-only or message)
@@ -21,11 +29,8 @@ A lightweight and extensible styled UI component kit for PySide6 applications.
 ---
 
 ## インストール / Installation
-開発モードで利用する場合：  
-For development mode:
-
 ```bash
-pip install -e .
+pip install pyside6stylekit
 ```
 
 ---
@@ -33,6 +38,50 @@ pip install -e .
 ## 使い方 / Usage
 `examples/demo.py` と `examples/demo_indus.py` に基本的な使い方があります。  
 Basic usage is available in `examples/demo.py` and `examples/demo_indus.py`.
+
+### サポート widget / Supported widgets
+- `StyledLabel`
+- `StyledLineEdit`
+- `StyledButton`
+- `StyledCheckBox`
+- `StyledRadioButton`
+- `StyledComboBox`
+- `StyledSlider`
+- `StyledProgressBar`
+- `StyledTextEdit`
+- `StyledGroupBox`
+- `IndusAlternateButton`, `IndusLamp`, `IndusMomentaryButton`
+
+※ さらに `Theme` 本体で色やサイズ設定を管理し、各 widget のスタイルを統一しています。
+### 利用可能なカラーモード / Available color modes
+- `Theme.light()`
+- `Theme.dark()`
+- `Theme(primary=<hex>, mode='light'|'dark', background='<hex>')`
+
+### サポート色（`utils/colors.py`） / Supported colors
+`normalize_color` で次のキーワードを16進色に変換します:
+- red: `#ff0000`
+- green: `#00ff00`
+- blue: `#0000ff`
+- black: `#000000`
+- white: `#ffffff`
+- gray: `#808080`
+- orange: `#ffa500`
+- yellow: `#ffff00`
+- purple: `#800080`
+- pink: `#ffc0cb`
+- sky: `#87ceeb`
+
+`normalize_color` は `'#rrggbb'` 形式や `(r,g,b)` 形式も受け付けます。
+
+### 色サンプル / Color samples
+```python
+from pyside6stylekit.utils.colors import normalize_color, adjust_color
+
+print(normalize_color('sky'))       # #87ceeb
+print(normalize_color((255,16,128)))  # #ff1080
+print(adjust_color('#ff1080', 0.8))   # #cc0d66
+```
 
 ```python
 from pyside6stylekit import Theme, StyledLabel, StyledLineEdit, StyledButton
@@ -42,6 +91,10 @@ theme = Theme.light()
 label = StyledLabel("Hello")
 lineedit = StyledLineEdit(validator="int")
 button = StyledButton("Submit")
+
+# GroupBox with adaptive title positioning
+groupbox = StyledGroupBox("Settings", theme)
+
 ```
 
 ---
@@ -56,11 +109,18 @@ pyside6stylekit/
 │   ├─ widgets/
 │   │  ├─ __init__.py
 │   │  ├─ button.py
+│   │  ├─ checkbox.py
+│   │  ├─ combobox.py
+│   │  ├─ groupbox.py
 │   │  ├─ indus_alternate_button.py
 │   │  ├─ indus_lamp.py
 │   │  ├─ indus_momentary_button.py
 │   │  ├─ label.py
-│   │  └─ lineedit.py
+│   │  ├─ lineedit.py
+│   │  ├─ progressbar.py
+│   │  ├─ radiobutton.py
+│   │  ├─ slider.py
+│   │  └─ textedit.py
 │   ├─ __init__.py
 │   ├─ presets.py
 │   └─ theme.py
