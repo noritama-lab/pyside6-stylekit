@@ -30,6 +30,7 @@ class StyledButton(QPushButton):
                 border-radius: 6px;
                 font-family: '{self.theme.font_family}';
                 border: none;
+                font-weight: bold;
             }}
             QPushButton:hover {{
                 background-color: {hover};

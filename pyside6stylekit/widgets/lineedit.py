@@ -41,6 +41,7 @@ class StyledLineEdit(QWidget):
                 background: {self.theme.background};
                 color: {self.theme.text_color};
                 font-family: '{self.theme.font_family}';
+                font-weight: bold;
             }}
             QLineEdit:focus {{
                 border: 2px solid {self.theme.primary};
