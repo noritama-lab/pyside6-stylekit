@@ -83,6 +83,11 @@ class StyledLineEdit(QLineEdit):
         # Validate only when editing is finished (focus out or Enter).
         self.editingFinished.connect(self._verify_numeric_range)
 
+    def focusOutEvent(self, event):
+        super().focusOutEvent(event)
+        # Ensure validation runs even when editingFinished is not emitted.
+        self._verify_numeric_range()
+
     def _decimal_places(self, value):
         s = str(value)
         return len(s.split(".")[1]) if "." in s else 0

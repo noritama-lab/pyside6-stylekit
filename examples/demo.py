@@ -39,7 +39,7 @@ class SampleWindow(QWidget):
         input_alnum = StyledLineEdit("Alphanumeric only", theme, mode="alnum")
         input_filename = StyledLineEdit("Filename OK", theme, mode="filename")
         input_numeric_range = StyledLineEdit("Range (0-120)", theme,
-                                   mode="numeric_range", min_val=10.00, max_val=120.88)
+                                   mode="numeric_range", min_val=10.00, max_val=120.00)
 
         # 新しいウィジェット
         checkbox = StyledCheckBox("CheckBox", theme_checkbox, checked=True)
