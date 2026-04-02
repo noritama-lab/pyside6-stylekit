@@ -39,13 +39,13 @@ class SampleWindow(QWidget):
         input_alnum = StyledLineEdit("Alphanumeric only", theme, mode="alnum")
         input_filename = StyledLineEdit("Filename OK", theme, mode="filename")
         input_numeric_range = StyledLineEdit("Range (0-120)", theme,
-                                   mode="numeric_range", min_val=-10.00, max_val=120.88)
+                                   mode="numeric_range", min_val=10.00, max_val=120.88)
 
         # 新しいウィジェット
         checkbox = StyledCheckBox("CheckBox", theme_checkbox, checked=True)
         radiobutton = StyledRadioButton("RadioButton", theme_checkbox)
         combobox = StyledComboBox(theme, ["Option 1", "Option 2", "Option 3"])
-        slider = StyledSlider(theme, min_val=0, max_val=100, value=50)
+        slider = StyledSlider(theme, min_val=10, max_val=100, value=50)
         progressbar = StyledProgressBar(theme, 0, 100, 75)
         textedit = StyledTextEdit(theme, "Multi-line text editor")
         groupbox = StyledGroupBox("Additional Controls", theme_groupbox)

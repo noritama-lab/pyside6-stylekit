@@ -12,18 +12,14 @@ A lightweight and extensible styled UI component kit for PySide6 applications.
 - GroupBox タイトルの自動中央揃え（フォントサイズ変更に追随）  
 - 数値バリデーション（int / float / range）  
   Robust numeric validation (int, float, range)
+- `numeric_range` は Enter またはフォーカスアウト時に範囲検証  
+  `numeric_range` is verified on Enter or focus-out
 - エラー表示の柔軟な制御（枠線のみ・メッセージ表示）  
   Flexible error signaling (border-only or message)
 - 拡張しやすいモジュール構造  
   Modular and extensible architecture
 - 実用的なサンプルコード付き  
   Includes practical example scripts
-
-## v0.2.1 更新内容 / What's New
-- `StyledLineEdit` を `QLineEdit` ベースに整理（内部合成から継承へ）
-- `numeric_range` 入力の範囲制御を強化（範囲外入力を抑制）
-- エラーメッセージは `show_error("...")` 呼び出し時にツールチップ表示
-- `examples/demo.py` に Validate ボタンを表示
 
 ---
 

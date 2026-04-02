@@ -14,7 +14,6 @@ class StyledLineEdit(QLineEdit):
         self.max_val = max_val
         self.background = background
         self._numeric_range_is_int = False
-        self._last_valid_text = ""
 
         self.setPlaceholderText(placeholder)
         self.setFont(QFont(theme.font_family, theme.font_size()))
@@ -81,33 +80,22 @@ class StyledLineEdit(QLineEdit):
             validator.setNotation(QDoubleValidator.StandardNotation)
 
         self.setValidator(validator)
-        self.textEdited.connect(self._enforce_numeric_range)
+        # Validate only when editing is finished (focus out or Enter).
+        self.editingFinished.connect(self._verify_numeric_range)
 
     def _decimal_places(self, value):
         s = str(value)
         return len(s.split(".")[1]) if "." in s else 0
 
-    def _enforce_numeric_range(self, text):
-        if text == "":
-            self._last_valid_text = ""
+    def _verify_numeric_range(self):
+        if self.mode != "numeric_range":
             return
 
-        if text in {"-", "+", ".", "-.", "+."}:
-            if self._numeric_range_is_int and "." in text:
-                self.setText(self._last_valid_text)
+        if self.is_valid() or self.text() == "":
+            self.apply_style(error=False)
             return
 
-        try:
-            value = int(text) if self._numeric_range_is_int else float(text)
-        except ValueError:
-            self.setText(self._last_valid_text)
-            return
-
-        if self.min_val <= value <= self.max_val:
-            self._last_valid_text = text
-            return
-
-        self.setText(self._last_valid_text)
+        self.apply_style(error=True)
 
     def value(self):
         try:
