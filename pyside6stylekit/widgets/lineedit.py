@@ -1,9 +1,9 @@
 # widgets/lineedit.py
-from PySide6.QtWidgets import QWidget, QLineEdit, QLabel, QVBoxLayout, QToolTip
+from PySide6.QtWidgets import QLineEdit, QToolTip
 from PySide6.QtGui import QFont, QRegularExpressionValidator, QIntValidator, QDoubleValidator
 from PySide6.QtCore import QRegularExpression
 
-class StyledLineEdit(QWidget):
+class StyledLineEdit(QLineEdit):
     def __init__(self, placeholder, theme, mode="free",
                  min_val=None, max_val=None, background=None):
         super().__init__()
@@ -13,19 +13,11 @@ class StyledLineEdit(QWidget):
         self.min_val = min_val
         self.max_val = max_val
         self.background = background
+        self._numeric_range_is_int = False
+        self._last_valid_text = ""
 
-        self.edit = QLineEdit()
-        self.error_label = QLabel(" ")
-        self.error_label.setFixedHeight(14)
-        self.error_label.setStyleSheet("color: transparent; font-size: 11px;")
-
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(self.edit)
-        layout.addWidget(self.error_label)
-
-        self.edit.setPlaceholderText(placeholder)
-        self.edit.setFont(QFont(theme.font_family, theme.font_size()))
+        self.setPlaceholderText(placeholder)
+        self.setFont(QFont(theme.font_family, theme.font_size()))
 
         self.apply_style()
         self.apply_validator(mode, min_val, max_val)
@@ -34,7 +26,7 @@ class StyledLineEdit(QWidget):
         pad_v, pad_h = self.theme.padding()
         border_color = "red" if error else self.theme.border_color
 
-        self.edit.setStyleSheet(f"""
+        self.setStyleSheet(f"""
             QLineEdit {{
                 padding: {pad_v}px {pad_h}px;
                 border: 2px solid {border_color};
@@ -54,7 +46,7 @@ class StyledLineEdit(QWidget):
 
         if mode == "numeric":
             regex = QRegularExpression(r"^[0-9]+$")
-            self.edit.setValidator(QRegularExpressionValidator(regex))
+            self.setValidator(QRegularExpressionValidator(regex))
             return
 
         if mode == "numeric_range":
@@ -63,12 +55,12 @@ class StyledLineEdit(QWidget):
 
         if mode == "alnum":
             regex = QRegularExpression(r"^[A-Za-z0-9]+$")
-            self.edit.setValidator(QRegularExpressionValidator(regex))
+            self.setValidator(QRegularExpressionValidator(regex))
             return
 
         if mode == "filename":
             regex = QRegularExpression(r'^[^\\/:*?"<>|]+$')
-            self.edit.setValidator(QRegularExpressionValidator(regex))
+            self.setValidator(QRegularExpressionValidator(regex))
             return
 
         raise ValueError(f"Unknown mode: {mode}")
@@ -78,6 +70,7 @@ class StyledLineEdit(QWidget):
             raise ValueError("numeric_range requires min_val and max_val")
 
         is_int = isinstance(min_val, int) and isinstance(max_val, int)
+        self._numeric_range_is_int = is_int
 
         if is_int:
             validator = QIntValidator(min_val, max_val)
@@ -87,15 +80,38 @@ class StyledLineEdit(QWidget):
             validator = QDoubleValidator(min_val, max_val, decimals)
             validator.setNotation(QDoubleValidator.StandardNotation)
 
-        self.edit.setValidator(validator)
+        self.setValidator(validator)
+        self.textEdited.connect(self._enforce_numeric_range)
 
     def _decimal_places(self, value):
         s = str(value)
         return len(s.split(".")[1]) if "." in s else 0
 
+    def _enforce_numeric_range(self, text):
+        if text == "":
+            self._last_valid_text = ""
+            return
+
+        if text in {"-", "+", ".", "-.", "+."}:
+            if self._numeric_range_is_int and "." in text:
+                self.setText(self._last_valid_text)
+            return
+
+        try:
+            value = int(text) if self._numeric_range_is_int else float(text)
+        except ValueError:
+            self.setText(self._last_valid_text)
+            return
+
+        if self.min_val <= value <= self.max_val:
+            self._last_valid_text = text
+            return
+
+        self.setText(self._last_valid_text)
+
     def value(self):
         try:
-            return float(self.edit.text())
+            return float(self.text())
         except ValueError:
             return None
 
@@ -111,19 +127,12 @@ class StyledLineEdit(QWidget):
 
     def show_error(self, message=None):
         if message is None:
-            self.error_label.setText(" ")
-            self.error_label.setStyleSheet("color: transparent; font-size: 11px;")
             self.apply_style(error=True)
             return
 
         if message == "":
-            self.error_label.setText(" ")
-            self.error_label.setStyleSheet("color: transparent; font-size: 11px;")
             self.apply_style(error=False)
             return
 
-        QToolTip.showText(self.edit.mapToGlobal(self.edit.rect().bottomLeft()), message)
-
-        self.error_label.setText(" ")
-        self.error_label.setStyleSheet("color: transparent; font-size: 11px;")
+        QToolTip.showText(self.mapToGlobal(self.rect().bottomLeft()), message)
         self.apply_style(error=True)

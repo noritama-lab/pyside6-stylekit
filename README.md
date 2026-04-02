@@ -18,13 +18,12 @@ A lightweight and extensible styled UI component kit for PySide6 applications.
   Modular and extensible architecture
 - 実用的なサンプルコード付き  
   Includes practical example scripts
-  Robust numeric validation (int, float, range)
-- エラー表示の柔軟な制御（枠線のみ・メッセージ表示）  
-  Flexible error signaling (border-only or message)
-- 拡張しやすいモジュール構造  
-  Modular and extensible architecture
-- 実用的なサンプルコード付き  
-  Includes practical example scripts
+
+## v0.2.1 更新内容 / What's New
+- `StyledLineEdit` を `QLineEdit` ベースに整理（内部合成から継承へ）
+- `numeric_range` 入力の範囲制御を強化（範囲外入力を抑制）
+- エラーメッセージは `show_error("...")` 呼び出し時にツールチップ表示
+- `examples/demo.py` に Validate ボタンを表示
 
 ---
 
@@ -84,16 +83,20 @@ print(adjust_color('#ff1080', 0.8))   # #cc0d66
 ```
 
 ```python
-from pyside6stylekit import Theme, StyledLabel, StyledLineEdit, StyledButton
+from pyside6stylekit import Theme, StyledLabel, StyledLineEdit, StyledButton, StyledGroupBox
 
 theme = Theme.light()
 
 label = StyledLabel("Hello")
-lineedit = StyledLineEdit(validator="int")
+lineedit = StyledLineEdit("Range (0-120)", theme, mode="numeric_range", min_val=0, max_val=120)
 button = StyledButton("Submit")
 
 # GroupBox with adaptive title positioning
 groupbox = StyledGroupBox("Settings", theme)
+
+# Validation examples
+lineedit.show_error("Value out of range")  # tooltip + red border
+lineedit.show_error("")                    # clear error state
 
 ```
 

@@ -39,7 +39,7 @@ class SampleWindow(QWidget):
         input_alnum = StyledLineEdit("Alphanumeric only", theme, mode="alnum")
         input_filename = StyledLineEdit("Filename OK", theme, mode="filename")
         input_numeric_range = StyledLineEdit("Range (0-120)", theme,
-                                   mode="numeric_range", min_val=0, max_val=120)
+                                   mode="numeric_range", min_val=-10.00, max_val=120.88)
 
         # 新しいウィジェット
         checkbox = StyledCheckBox("CheckBox", theme_checkbox, checked=True)
@@ -76,6 +76,7 @@ class SampleWindow(QWidget):
         layout.addWidget(progressbar)
         layout.addWidget(textedit)
         layout.addWidget(groupbox)
+        layout.addWidget(button)
 
         # ボタンの接続
         button.clicked.connect(lambda: self.validate(input_numeric_range))

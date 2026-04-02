@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyside6stylekit"
-version = "0.2.0"
+version = "0.2.1"
 description = "A lightweight and extensible styled UI component kit for PySide6 applications."
 authors = [
     {name = "Noritama-Lab"}
